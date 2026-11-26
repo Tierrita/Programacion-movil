@@ -75,7 +75,7 @@ fun DetalleRecordatorio(
 
                 is DetalleUiState.Error -> {
                     EstadoPantalla(
-                        titulo = "Ocurrio un error",
+                        titulo = "Ocurrió un error",
                         mensaje = estado.mensaje,
                         textoAccion = "Reintentar",
                         onAccion = onReintentar,
@@ -108,7 +108,7 @@ fun DetalleRecordatorio(
                                     Arrangement.spacedBy(16.dp),
                             ) {
                                 DatoDetalle(
-                                    "Categoria",
+                                    "Categoría",
                                     RecordatoriosSimulados.etiquetas
                                         .getValue(recordatorio.categoria)
                                 )
@@ -130,10 +130,10 @@ fun DetalleRecordatorio(
                                 HorizontalDivider()
 
                                 DatoDetalle(
-                                    "Descripcion",
+                                    "Descripción",
                                     recordatorio.descripcion
                                         ?.takeIf { it.isNotBlank() }
-                                        ?: "Sin descripcion",
+                                        ?: "Sin descripción",
                                 )
                             }
                         }

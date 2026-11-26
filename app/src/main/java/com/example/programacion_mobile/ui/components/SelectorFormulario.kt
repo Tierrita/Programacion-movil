@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.error
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -19,7 +21,9 @@ fun <T> SelectorFormulario(
     habilitado: Boolean = true,
 ) {
     Column(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth().semantics {
+            error?.let { mensaje -> error(mensaje) }
+        },
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Text(

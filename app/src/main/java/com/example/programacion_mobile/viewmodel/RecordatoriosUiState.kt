@@ -31,17 +31,17 @@ data class FormularioUiState(
 ) {
     val errorTitulo: String?
         get() = if (titulo.trim().length < 4)
-            "El titulo debe tener al menos 4 caracteres."
+            "El título debe tener al menos 4 caracteres."
         else null
 
     val errorDescripcion: String?
         get() = if (descripcion.length > 200)
-            "La descripcion no puede superar los 200 caracteres."
+            "La descripción no puede superar los 200 caracteres."
         else null
 
     val errorCategoria: String?
         get() = if (categoria !in RecordatoriosSimulados.categorias)
-            "Selecciona una categoria valida."
+            "Selecciona una categoría válida."
         else null
 
     val errorPrioridad: String?

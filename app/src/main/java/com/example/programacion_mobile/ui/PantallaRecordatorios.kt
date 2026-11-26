@@ -16,6 +16,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.programacion_mobile.model.Estado
 import com.example.programacion_mobile.model.Prioridad
 import com.example.programacion_mobile.ui.components.EstadoPantalla
+import com.example.programacion_mobile.ui.components.MenuSimulaciones
 import com.example.programacion_mobile.ui.components.TarjetaRecordatorio
 import com.example.programacion_mobile.viewmodel.RecordatoriosUiState
 import com.example.programacion_mobile.viewmodel.RecordatoriosViewModel
@@ -34,6 +35,14 @@ fun PantallaRecordatorios(
         onCrearRecordatorio = onCrearRecordatorio,
         onRecordatorioClick = onRecordatorioClick,
         onReintentar = vm::reintentar,
+        acciones = {
+            MenuSimulaciones(
+                onDatos = vm::simularDatos,
+                onVacio = vm::simularVacio,
+                onError = vm::simularError,
+                onErrorGuardado = vm::simularErrorGuardado,
+            )
+        },
         modifier = modifier,
     )
 }
@@ -46,6 +55,7 @@ fun ListadoRecordatorios(
     onRecordatorioClick: (Int) -> Unit,
     onReintentar: () -> Unit,
     modifier: Modifier = Modifier,
+    acciones: @Composable () -> Unit = {},
 ) {
     var soloPendientes by rememberSaveable {
         mutableStateOf(false)
@@ -59,7 +69,8 @@ fun ListadoRecordatorios(
         modifier = modifier,
         topBar = {
             TopAppBar(
-                title = { Text("Mis recordatorios") }
+                title = { Text("Mis recordatorios") },
+                actions = { acciones() },
             )
         },
         floatingActionButton = {

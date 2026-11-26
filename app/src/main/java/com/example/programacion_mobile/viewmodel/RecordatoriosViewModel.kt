@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.programacion_mobile.data.InMemoryRecordatorioRepository
 import com.example.programacion_mobile.data.RecordatorioRepository
+import com.example.programacion_mobile.data.ControlSimulaciones
 import com.example.programacion_mobile.model.Categoria
 import com.example.programacion_mobile.model.Prioridad
 import kotlinx.coroutines.CancellationException
@@ -62,6 +63,8 @@ class RecordatoriosViewModel(
     }
 
     fun reintentar() {
+        val repo = repository as? ControlSimulaciones
+        repo?.simularErrorCarga = false
         cargarRecordatorios()
     }
 
@@ -169,7 +172,7 @@ class RecordatoriosViewModel(
                     DetalleUiState.Datos(recordatorio)
                 } else {
                     DetalleUiState.Error(
-                        "No se encontro el recordatorio."
+                        "No se encontró el recordatorio."
                     )
                 }
             } catch (e: CancellationException) {
@@ -180,5 +183,39 @@ class RecordatoriosViewModel(
                 )
             }
         }
+    }
+
+    fun simularDatos() {
+        val repo = repository as? ControlSimulaciones
+            ?: return
+
+        repo.simularErrorCarga = false
+        repo.simularListaVacia = false
+        cargarRecordatorios()
+    }
+
+    fun simularVacio() {
+        val repo = repository as? ControlSimulaciones
+            ?: return
+
+        repo.simularErrorCarga = false
+        repo.simularListaVacia = true
+        cargarRecordatorios()
+    }
+
+    fun simularError() {
+        val repo = repository as? ControlSimulaciones
+            ?: return
+
+        repo.simularListaVacia = false
+        repo.simularErrorCarga = true
+        cargarRecordatorios()
+    }
+
+    fun simularErrorGuardado(activar: Boolean) {
+        val repo = repository as? ControlSimulaciones
+            ?: return
+
+        repo.simularErrorGuardado = activar
     }
 }

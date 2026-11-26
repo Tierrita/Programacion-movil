@@ -10,15 +10,15 @@ import kotlinx.coroutines.sync.withLock
 
 class InMemoryRecordatorioRepository(
     iniciales: List<Recordatorio> = RecordatoriosSimulados.recordatorios,
-) : RecordatorioRepository {
+) : RecordatorioRepository, ControlSimulaciones {
 
     private val mutex = Mutex()
     private val datos = iniciales.toMutableList()
     private var siguienteId = (iniciales.maxOfOrNull { it.id } ?: 0) + 1
 
-    var simularErrorCarga = false
-    var simularErrorGuardado = false
-    var simularListaVacia = false
+    override var simularErrorCarga = false
+    override var simularErrorGuardado = false
+    override var simularListaVacia = false
 
     override suspend fun obtenerTodos(): List<Recordatorio> {
         delay(800)
