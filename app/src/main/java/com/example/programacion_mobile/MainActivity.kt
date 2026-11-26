@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.example.programacion_mobile.ui.PantallaRecordatorios
+import com.example.programacion_mobile.navigation.RecordatoriosNavHost
 import com.example.programacion_mobile.ui.theme.ProgramacionMobileTheme
 
 class MainActivity : ComponentActivity() {
@@ -13,7 +13,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ProgramacionMobileTheme {
-                PantallaRecordatorios()
+                RecordatoriosNavHost()
             }
         }
     }

@@ -57,3 +57,16 @@ data class FormularioUiState(
             !guardando &&
             !guardado
 }
+
+sealed interface DetalleUiState {
+
+    data object Cargando : DetalleUiState
+
+    data class Datos(
+        val recordatorio: Recordatorio,
+    ) : DetalleUiState
+
+    data class Error(
+        val mensaje: String,
+    ) : DetalleUiState
+}

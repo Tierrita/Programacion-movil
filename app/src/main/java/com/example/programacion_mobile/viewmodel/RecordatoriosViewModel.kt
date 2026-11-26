@@ -147,4 +147,38 @@ class RecordatoriosViewModel(
             }
         }
     }
+
+    private val _detalle =
+        MutableStateFlow<DetalleUiState>(
+            DetalleUiState.Cargando
+        )
+
+    val detalle = _detalle.asStateFlow()
+
+    private var detalleJob: Job? = null
+
+    fun cargarDetalle(id: Int) {
+        detalleJob?.cancel()
+        _detalle.value = DetalleUiState.Cargando
+
+        detalleJob = viewModelScope.launch {
+            try {
+                val recordatorio = repository.obtenerPorId(id)
+
+                _detalle.value = if (recordatorio != null) {
+                    DetalleUiState.Datos(recordatorio)
+                } else {
+                    DetalleUiState.Error(
+                        "No se encontro el recordatorio."
+                    )
+                }
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                _detalle.value = DetalleUiState.Error(
+                    e.message ?: "Error al consultar el detalle."
+                )
+            }
+        }
+    }
 }
